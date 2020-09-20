@@ -1,10 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TrickController!{% endblock %}
+{% form_theme form _self %}
 
 {% block body %}
-{{ form_start(form) }}
-
-{{ form_end(form) }}
-
+    <!-- Start Update Trick -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-md-offset-1 update-trick">
+                <div class="card card-small mb-4 mt-5">
+                    <div class="card-header border-bottom text-center">
+                        <h6 class="m-0">Ajouter le trick</h6>                       
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item p-3">
+                            <div class="row">
+                                <div class="col">
+                                    {% form_theme form _self %}
+                                    {{ form_start(form) }}
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                               {{ form_row(form.image) }}                                              
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                {{ form_row(form.Name) }}                                              
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="load-media d-none d-lg-block">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12 text-center">
+                                                    
+                                                    <p class="collection-head first">Cliquez pour ajouter, supprimer ou modifier une image</p>
+                                                    {{ form_widget(form.images) }}
+                                                    <input type="hidden" id="image-counter" value="0">
+                                                    <hr>                                   
+                                                </div>
+                                            </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12 text-center">                                             
+                                                        <p class="collection-head">Cliquez pour ajouter, supprimer ou modifier une vidéo (<u>Youtube uniquement</u>)</p>
+                                                            {{ form_widget(form.video) }}
+                                                        <input type="hidden" id="video-counter" value="0">
+                                                        
+                                                    </div>
+                                                </div>
+                                        </div> 
+                                        <hr class="delimiter">
+                                        <div class="col-md-8 offset-md-2">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    {{ form_row(form.categoryId) }}
+                                                </div>
+                                            </div>                              
+                                            <div class="form-group">
+                                                {{ form_row(form.description) }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-4 text-center">
+                                            <button type="submit" class="btn btn-success">Ajouter</button>
+                                        </div>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Update Trick -->
 {% endblock %}

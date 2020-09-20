@@ -1,0 +1,45 @@
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Dashboard */
+
+/* --------------------------------------------------------------------------------- */
+
+.card-body {
+    padding: 2.1875rem 1.25rem 1.25rem;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Dashboard */
+
+/* --------------------------------------------------------------------------------- */
+
+.table thead th {
+    vertical-align: middle;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+thead.bg-light {
+    border: none;
+    background-color: #fbfbfb !important;
+}
+
+body > div.container-fluid > div > div > div.main-content-container.container-fluid.px-4 > div:nth-child(2) > div > div > div {
+    background-color: transparent;
+}
+
+.card-header.border-bottom {
+    background-color: transparent;
+}
+
+.btn.btn-white.inactive {
+    color: white;
+}
+
+.btn.btn-white.inactive:hover,
+.btn.btn-white.inactive:focus {
+    color: #3d5170;
+}

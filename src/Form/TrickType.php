@@ -25,11 +25,9 @@ class TrickType extends AbstractType
             ->add('Name')
             ->add('description')
             ->add('image', FileType::class, [
+                'required' => false,
                 'label' => false,
                 'data_class' => null,
-                'attr' => [
-                'placeholder' => 'Modifier ou ajouter un'
-                ],
                 'constraints' => [
                     new Image([
                         'maxSize' => '5M',

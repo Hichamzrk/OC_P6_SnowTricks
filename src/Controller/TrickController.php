@@ -47,6 +47,18 @@ class TrickController extends AbstractController
             $entityManager->flush();
         }
 
+        $images = $this->getDoctrine()
+        ->getRepository(Image::class)
+        ->findBy([
+            'trickId' => $id
+        ]);
+
+        $videos = $this->getDoctrine()
+        ->getRepository(Video::class)
+        ->findBy([
+            'trickId' => $id
+        ]);
+
         $comment = $this->getDoctrine()
         ->getRepository(Comment::class)
         ->findBy([
@@ -56,8 +68,10 @@ class TrickController extends AbstractController
         return $this->render('trick/index.html.twig', [
             'controller_name' => 'TrickController',
             'trick' => $trick,
-            'comment' => $comment,
-            'form' => $form->createView()
+            'comments' => $comment,
+            'form' => $form->createView(),
+            'images' => $images,
+            'videos' => $videos,
         ]);
     }
     /**
@@ -74,22 +88,31 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $image = $form->get('image')->getData();
-            
-            $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-            
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
 
-            $trick->setImage($newFilename);
-            $trick->setCreatedAt(new \DateTime('now'));
-            $trick->setUpdatedAt(new \DateTime('now'));
-            $trick->setUserId($user);
+            if ($form->get('image')->getData() === null) {
+                $image = 'default-trick.jpg';
+                $trick->setImage($image);
+            }
+            else {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
             
-            $image->move(
-                $this->getParameter('image_directory'),
-                $newFilename
-            );
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($image);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+    
+                $trick->setImage($newFilename);
+                $trick->setCreatedAt(new \DateTime('now'));
+                $trick->setUpdatedAt(new \DateTime('now'));
+                $trick->setUserId($user);
+                
+                $image->move(
+                    $this->getParameter('image_directory'),
+                    $newFilename
+                );
+    
+            }
+
+            
 
             // On récupère les images transmises
             $images = $form->get('images')->getData();            
@@ -155,25 +178,29 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $image = $form->get('image')->getData();
-            
-            $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-            
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
 
-            $trick->setImage($newFilename);
-            $trick->setCreatedAt(new \DateTime('now'));
-            $trick->setUpdatedAt(new \DateTime('now'));
-            $trick->setUserId($user);
+            if ($form->get('image')->getData() !== null) {
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($image);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
 
-            $image->move(
-                $this->getParameter('image_directory'),
-                $newFilename
-            );
+                $trick->setImage($newFilename);
+                $trick->setCreatedAt(new \DateTime('now'));
+                $trick->setUpdatedAt(new \DateTime('now'));
+                $trick->setUserId($user);
+
+                $image->move(
+                    $this->getParameter('image_directory'),
+                    $newFilename
+                );
+            }
+            else {
+                $imageFile = $trick->getImage();
+                $trick->setImage($imageFile);
+            }
 
             // On récupère les images transmises
-            $images = $form->get('images')->getData();            
+            $images = $form->get('images')->getData();           
 
             // On boucle sur les images
             foreach($images as $image){
@@ -220,7 +247,7 @@ class TrickController extends AbstractController
             'form' => $form->createView(),
             'trick' => $trick,
             'imageView' => $imageView,
-            'videoView' => $videoView
+            'videos' => $videoView,
         ]);
     }
 

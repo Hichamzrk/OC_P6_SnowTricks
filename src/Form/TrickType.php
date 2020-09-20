@@ -5,8 +5,10 @@ namespace App\Form;
 use App\Entity\Tricks;
 use App\Form\ImageType;
 use App\Form\VideoType;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -45,6 +47,12 @@ class TrickType extends AbstractType
                 'label' => false,
                 'mapped' => false,
                 'required' => false
+            ])
+            
+            ->add('categoryId', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'title',
+                'label' => 'Catégorie',
             ])
             
             ->add('save', SubmitType::class)

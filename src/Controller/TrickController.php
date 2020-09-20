@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Image;
 use App\Entity\Video;
 use App\Entity\Tricks;
+use App\Entity\Comment;
 use App\Form\ImageType;
 use App\Form\TrickType;
+use App\Form\CommentType;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,15 +23,41 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{id}", name="trick")
      */
-    public function index($id)
+    public function index(Tricks $id, UserInterface $user, Request $request)
     {
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
         ->find($id);
 
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Je lie le commentaire à l'utilisateur connecté 
+            $comment->setUserId($user)
+                //Je lie le commentaire à la figure 
+                ->setTrickId($id);
+            
+            $comment->setCreatedAt(new \DateTime('now'));
+               
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
+
+        $comment = $this->getDoctrine()
+        ->getRepository(Comment::class)
+        ->findBy([
+            'trickId' => $id
+        ]);
+
         return $this->render('trick/index.html.twig', [
             'controller_name' => 'TrickController',
-            'trick' => $trick
+            'trick' => $trick,
+            'comment' => $comment,
+            'form' => $form->createView()
         ]);
     }
     /**

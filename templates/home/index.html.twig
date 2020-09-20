@@ -3,11 +3,16 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+     <a href="{{ path('add_trick') }}">add</a>
+
      {% for trick in tricks %}
           <br>
           {{ trick.name }}
           <br>
           {{ trick.description }}
           <a href="{{ path('trick', {'id': trick.id}) }}">plus</a>
+          <a href="{{ path('update_trick', {'trick': trick.id}) }}">edit</a>
+          <a href="{{ path('delete_trick', {'id': trick.id}) }}">delete</a>
+
      {% endfor %}
 {% endblock %}

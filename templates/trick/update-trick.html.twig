@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TrickController!{% endblock %}
+
+{% block body %}
+
+<pre>
+    {{ dump(videoView) }}
+</pre>
+
+{{ form_start(form) }}
+    {% if videoView is empty %}
+        {{ form_row(form.video) }}
+    {% else %}
+        {% do form.video.setRendered() %}
+    {% endif %}
+    {# other fields... #}
+{{ form_end(form) }}
+
+
+{% for video in videoView %}
+    <br> {{ video.url }} 
+    <a href="{{ path('delete_video', {'id': video.id}) }}">delete</a>
+{% endfor %}
+
+{% for image in imageView %}
+    <br> {{ image.name }} 
+    <a href="{{ path('delete_image', {'id': image.id}) }}">delete</a>
+{% endfor %}
+
+{% endblock %}

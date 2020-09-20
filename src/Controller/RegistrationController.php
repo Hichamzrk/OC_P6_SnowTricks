@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
             $user->setAvatar($newFilename);
             
             $avatar->move(
-                $this->getParameter('avatar_directory'),
+                $this->getParameter('image_directory'),
                 $newFilename
             );
 

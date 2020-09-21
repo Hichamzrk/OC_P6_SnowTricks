@@ -4,3 +4,6 @@ index:
 reset-password:
     path: /reset-password
     controller: App\Controller\ResetPasswordController::index
+app-register:
+    path: /app-register
+    controller: App\Controller\RegistrationController::register

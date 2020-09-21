@@ -1,12 +1,93 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
+        <!-- Meta -->
         <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <!-- Title -->
         <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+
+        <!-- FontAwesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+        <!--Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- Main StyleSheet -->
+        <link rel="stylesheet" href="/css/style.css">
+
+        <!-- Responsive StyleSheet -->
+        <link rel="stylesheet" href="/css/responsive.css">
+
+        <!-- Icon -->
+        <link rel="shortcut icon" href="/images/favicon.png">
+        
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <!-- Start Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+            <a class="navbar-brand" href="{{ path('home') }}"><img class="logo" src="{{ asset('images/logo.png') }}" alt="Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse ml-auto" id="navbarColor01">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mt-3 mt-lg-0">
+                        <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#tricks">Tricks</a>
+                    </li>
+                    {% if not app.user %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav> 
+        <!-- End Navbar -->   
         {% block body %}{% endblock %}
+        <!-- Start Footer -->
+        <footer class="container-fluid text-center">
+            <p>© COPYRIGHT JEAN DESCORPS</p>
+        </footer>
+        <!-- End Footer -->
+
+        <!-- Delete Comment Modal -->
+        {# {{ include('/modals/delete-comment.html.twig') }} #}
+
+        <!-- Delete Trick Modal -->
+        {# {{ include('/modals/delete-trick.html.twig') }} #}
+
+        <!-- Jquery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+        <!-- Popper Library-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap JS -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <!-- Main JS File-->
+        <script src="/js/main.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

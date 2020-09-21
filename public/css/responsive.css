@@ -1,0 +1,66 @@
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Responsive max-width 768px */
+
+/* --------------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+
+    /* -------------------------------------- */
+    /*  /* Carousel */
+    /* -------------------------------------- */
+    div.carousel div.carousel-item > img {
+        height: 15rem;
+    }
+
+    div.carousel div.carousel-item > iframe {
+        height: 15rem;
+    }
+
+    /* -------------------------------------- */
+    /*  /* Slogan */
+    /* -------------------------------------- */
+    .slogan-p {
+        margin-bottom: 5rem;
+    }
+
+    /* -------------------------------------- */
+    /*  /* Comment */
+    /* -------------------------------------- */
+    .entry-comments-avatar {
+        position: relative;
+        float: left;
+        margin-right: 1rem;
+    }
+
+    .entry-comments-body {
+        padding-left: 0;
+    }
+
+    .entry-comments-author {
+        line-height: 3.7rem;
+    }
+
+    /* -------------------------------------- */
+    /*  /* Profile Main Sidebar */
+    /* -------------------------------------- */
+    .main-sidebar {
+        box-shadow: none;
+        height: 3.75rem;
+    }
+
+    /* -------------------------------------- */
+    /*  /* Profile Page Header */
+    /* -------------------------------------- */
+    body > div.container-fluid > div > div > div.main-content-container.container-fluid.px-4 > div.page-header.row.py-4 {
+        padding-top: 5rem !important;
+    }
+
+    /* -------------------------------------- */
+    /*  /* Profile Copyright */
+    /* -------------------------------------- */
+    .copyright {
+        margin-left: 5rem;
+    }
+}
+

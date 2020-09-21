@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - {{ trick.name }}{% endblock %}
+
+{% form_theme form _self %}
+
+{% block body %}
+    <!-- Start Update Trick -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-md-offset-1 update-trick">
+                <div class="card card-small mb-4 mt-5">
+                    <div class="card-header border-bottom text-center">
+                        <h6 class="m-0">Modifier le trick</h6>                       
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item p-3">
+                            <div class="row">
+                                <div class="col">
+                                    {% form_theme form _self %}
+                                    {{ form_start(form) }}
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <div class="text-center">
+                                                    <img src="/images/{{ trick.image }}" alt="{{ trick.image }}" class="img-trick-principale"> 
+                                                </div>                                         
+                                                {{ form_row(form.image) }}                                              
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                {{ form_row(form.Name) }}                                              
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="load-media d-none d-lg-block">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12 text-center">
+                                                    
+                                                    <p class="collection-head first">Cliquez pour ajouter, supprimer ou modifier une image</p>
+                                                    {{ form_widget(form.images) }}
+                                                    <input type="hidden" id="image-counter" value="0">
+                                                    <div class="container p-5">
+                                                        <div class="row">
+                                                            {% for image in imageView %}
+                                                                <div class="col-lg-4 mb-4 trick">              
+                                                                    <div class="card">
+                                                                        <img class="card-img-top home" src="/images/{{ image.name }}" alt="image">
+                                                                        <div class="card-body test">
+                                                                            {# {% if (app.user) and ((app.userId.id == trick.userid.id)) %} #}
+                                                                                <a class="float-right change-link ml-3 mr-3 pt-2" href="{{ path('update_trick', {'trick': trick.id}) }}" target="_blank"><i class="fas fa-pen fa-2x"></i></a>
+                                                                                <a class="float-right change-link ml-2 pt-2" href="{{ path('delete_image', {'id': image.id}) }}"><i class="fas fa-trash-alt fa-2x text-info"></i></a>
+                                                                            {# {% endif %}                       #}
+                                                                        </div>
+                                                                    </div>               
+                                                                </div>     
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-12" style="margin : auto;">
+                                                        <div id="carousel-v" class="carousel slide mt-3 mb-2" data-ride="carousel">
+                                                            <ol class="carousel-indicators">
+                                                                {% for video in videos %}
+                                                                    <a class="float-right change-link ml-2 pt-2" href="{{ path('delete_video', {'id': video.id}) }}"><i class="fas fa-trash-alt fa-2x text-info"></i></a>
+                                                                {% endfor %}                                                            </ol>
+                                                            <div class="carousel-inner">
+                                                                {% for video in videos %}
+                                                                    <div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
+                                                                        <iframe src="{{ video.url }}" allowfullscreen></iframe>
+                                                                    </div>
+                                                                {% endfor %}        
+                                                            </div>
+                                                            <a class="carousel-control-prev" href="#carousel-v" data-slide="prev">
+                                                                <span class="carousel-control-prev-icon"></span>
+                                                            </a>
+                                                            <a class="carousel-control-next" href="#carousel-v" data-slide="next">
+                                                                <span class="carousel-control-next-icon"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div> 
+                                                    <hr>                                   
+                                                </div>
+                                            </div>
+                                            {% if videos is empty %}
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12 text-center">                                             
+                                                        <p class="collection-head">Cliquez pour ajouter, supprimer ou modifier une vidéo (<u>Youtube uniquement</u>)</p>
+                                                        {{ form_widget(form.video) }}
+                                                        <input type="hidden" id="video-counter" value="0">
+                                                        
+                                                    </div>
+                                                </div>
+                                                {% else %}
+                                                {% do form.video.setRendered() %}
+                                            {% endif %} 
+                                        </div>
+                                        <div class="text-center">
+                                            <a href="#" id="loadMedia" class="d-md-block d-lg-none">
+                                                <button class="btn btn-outline-secondary">Afficher les médias</button>
+                                            </a>
+                                            <a href="#" id="hideMedia" class="d-none d-md-none d-lg-none">
+                                                <button class="btn btn-outline-secondary mt-3">Masquer les médias</button>
+                                            </a>
+                                        </div>
+                                        <hr class="delimiter">
+                                        <div class="col-md-8 offset-md-2">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    {{ form_row(form.categoryId) }}
+                                                </div>
+                                            </div>                              
+                                            <div class="form-group">
+                                                {{ form_row(form.description) }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-4 text-center">
+                                            <button type="submit" class="btn btn-success">Modifier</button>
+                                        </div>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Update Trick -->
+{% endblock %}

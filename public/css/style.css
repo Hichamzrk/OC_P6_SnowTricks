@@ -1,0 +1,589 @@
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Global rules */
+
+/* --------------------------------------------------------------------------------- */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.logo {
+    max-height: 40px;
+}
+
+footer {
+    background-color: #1a1a1a;
+    color: white;
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Home image */
+
+/* --------------------------------------------------------------------------------- */
+
+.home-bg {
+    background-image: url('/images/home.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 100%;
+    height: 100vh;
+}
+
+.slogan {
+    height: 100vh;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.slogan-p {
+    align-self: flex-start;
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.chevron-down {
+    position: absolute;
+    right: 0.5%;
+    bottom: 0%;
+}
+
+.cup {
+    position: relative;
+}
+
+.chevron-up {
+    position: absolute;
+    right: 0.5%;
+    bottom: 0;
+}
+
+.tricks-anchor {
+    /* Anchor and fixed navbar */
+    display: block;
+    height: 98.75px;
+    margin-top: -98.75px;
+    visibility: hidden;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Tricks cards */
+
+/* --------------------------------------------------------------------------------- */
+
+.card {
+    box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px #5a61690f, 0 7px 70px rgba(90, 97, 105, 0.1);
+    border-radius: 0.625rem;
+}
+
+.card-img-top {
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
+}
+
+.card-img-top.home {
+    height: 12rem;
+}
+
+.trick-link {
+    font-weight: 900;
+    font-size: 0.765625rem;
+    border-radius: 0.625rem;
+}
+
+.change-link {
+    font-size: 0.6rem;
+    color: #1f9bcf;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Trick */
+
+/* --------------------------------------------------------------------------------- */
+
+.trick-data {
+    font-size: 0.8rem;
+}
+
+.list-inline-item:not(:first-child) {
+    margin-left: 0.5rem;
+}
+
+.no-medias {
+    border: 2px solid grey;
+}
+
+.no-medias > p {
+    color: grey;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Carousel */
+
+/* --------------------------------------------------------------------------------- */
+
+.blog-comments__avatar img {
+    width: 3.125rem;
+    height: 3.125rem;
+    border-radius: 0.25rem;
+}
+
+div.carousel div.carousel-item > img {
+    width: 100%;
+    height: 18.75rem;
+}
+
+div.carousel div.carousel-item > iframe {
+    width: 100%;
+    height: 18.75rem;
+    border: 0;
+    display: block;
+}
+
+.carousel-indicators {
+    bottom: -50px;
+}
+
+.carousel-indicators li {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: #ccc;
+}
+
+.carousel-inner {
+    margin-bottom: 50px;
+    border-radius: 0.625rem;
+    box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px #5a61690f, 0 7px 70px rgba(90, 97, 105, 0.1);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    top: 55px;
+    bottom: 55px;
+}
+
+ol {
+    margin: 0;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Enlarge image on click */
+
+/* --------------------------------------------------------------------------------- */
+
+.enlarge.clic-image {
+    transform: scale(2, 2);
+    z-index: 100;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Load more function */
+
+/* --------------------------------------------------------------------------------- */
+
+div.trick {
+    display: none;
+}
+
+#loadLessTrick {
+    display: none;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Tricks comments */
+
+/* --------------------------------------------------------------------------------- */
+
+body > div.container.mt-5 > div > div > div.card.mt-5 {
+    margin-bottom: 30px;
+}
+
+.comments {
+    background: #fff;
+    border-radius: 0.625rem;
+    box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+.padDiv {
+    padding: 30px 35px;
+}
+
+.cmt {
+    background: #fff;
+    border-radius: 0.625rem;
+    box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
+}
+
+div.blog-comments__content > p {
+    font-weight: 600;
+}
+
+body > div.container.mt-5 > div > div > div.col-md-12.px-0 > div > p {
+    margin: 0;
+}
+
+#comment_content {
+    height: 8rem;
+}
+
+h6 {
+    font-weight: 500;
+}
+
+#comment-block > div {
+    padding-bottom: 20px;
+}
+
+.entry-comments-item {
+    margin-top: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.entry-comments-avatar {
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+.entry-comments-body {
+    padding-left: 86px;
+}
+
+.entry-comments-author {
+    font-size: 16px;
+    color: #292929;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+.comment-content {
+    margin-top: 25px;
+    margin-bottom: 0;
+    padding: 0;
+    font-size: 15px;
+    color: #999;
+    line-height: 28px;
+}
+
+.comment-date {
+    font-size: 13px;
+}
+
+.comments-anchor {
+    display: block;
+    height: 115px;
+    height: 98.75px;
+    margin-top: -98.75px;
+}
+
+.comment-anchor {
+    display: block;
+    height: 115px;
+    height: 98.75px;
+    margin-top: -98.75px;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Sign in page */
+
+/* --------------------------------------------------------------------------------- */
+
+.login {
+    margin-top: 11rem;
+    margin-bottom: 3rem;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Registration page */
+
+/* --------------------------------------------------------------------------------- */
+
+.registration {
+    margin-top: 10rem;
+    margin-bottom: 3rem;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Forgot password page */
+
+/* --------------------------------------------------------------------------------- */
+
+.forgot {
+    margin-top: 13rem;
+    margin-bottom: 9rem;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Reset password page */
+
+/* --------------------------------------------------------------------------------- */
+
+.reset {
+    margin-top: 13rem;
+    margin-bottom: 6rem;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* 404/403 page */
+
+/* --------------------------------------------------------------------------------- */
+
+.exception {
+    margin-top: 14rem;
+    margin-bottom: 5rem;
+}
+
+.button-exception {
+    min-width: 137px;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* Tricks update */
+
+/* --------------------------------------------------------------------------------- */
+
+.update-trick {
+    margin-top: 8rem;
+}
+
+#trick_content {
+    height: 10rem;
+}
+
+#trick_category {
+    height: 2.813rem;
+}
+
+.block-image > div.col-md-6 > div {
+    height: 45px;
+}
+
+body > div.container-fluid > div > div > div.main-content-container.container-fluid.px-4 > div:nth-child(2) > div > div > ul > li > div > div > form > div:nth-child(3) > div {
+    margin-bottom: 2.5rem;
+}
+
+#trick_images > fieldset {
+    margin: 0;
+}
+
+#trick_videos > fieldset {
+    margin: 0;
+}
+
+.custom-file-label::after {
+    content: "Choisir un fichier";
+}
+
+.card > .list-group:last-child .list-group-item:last-child {
+    border-bottom-right-radius: 0.625rem;
+    border-bottom-left-radius: 0.625rem;
+}
+
+.custom-file-label {
+    text-align: left;
+}
+
+.btn-trick {
+    height: 45px;
+    line-height: 1rem;
+    font-size: 36px;
+}
+
+.btn.btn-secondary.btn-trick {
+    padding-top: 10px;
+    padding-left: 10.5px;
+    padding-right: 10.5px;
+    border: none;
+}
+
+.img-trick-principale {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+    border-radius: 0.625rem;
+}
+
+.img-trick {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+    border-radius: 0.625rem;
+}
+
+p.collection-head {
+    font-weight: 600;
+    margin-bottom: 1.3rem;
+}
+
+p.collection-head.first {
+    margin-top: 1rem;
+}
+
+.delimiter {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.iframe-trick {
+    width: 100%;
+    min-height: 20rem;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    border: none;
+}
+
+.counter-image,
+.counter-video {
+    font-size: 20px;
+    font-weight: bolder;
+    vertical-align: middle;
+    margin-left: 1rem;
+    padding: 0.7rem;
+    color: black;
+    border: 2px solid #d9534f;
+    border-radius: 0.625rem;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  /* User profile */
+
+/* --------------------------------------------------------------------------------- */
+
+.profile-user {
+    margin-top: 12rem;
+}
+
+.card-header {
+    background-color: transparent;
+}
+
+.card-footer {
+    background-color: transparent;
+    padding: 1rem;
+}
+
+.card-footer.paging {
+    padding-bottom: 0;
+}
+
+ul.pagination {
+    margin: 0;
+}
+
+.blog-comments__item {
+    padding: 0;
+    border-top: 1px solid #e1e5eb;
+}
+
+.blog-comments__actions {
+    font-size: 95%;
+}
+
+.blog-comments__actions .btn-group button {
+    padding: 0.25rem 0.5625rem;
+}
+
+.btn-group-sm > .btn {
+    padding: 0.4286rem 0.875rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+.btn.btn-white {
+    border: 1px solid #e1e5eb;
+    color: #3d5170;
+}
+
+i.material-icons.consult {
+    font-size: inherit;
+    position: relative;
+    top: 2px;
+}
+
+.card-post__image {
+    position: relative;
+    min-height: 10.3125rem;
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.row.trick-user {
+    padding: 0;
+}
+
+.row.trick-user:first-child {
+    padding-left: 15px;
+}
+
+.row.trick-user:last-child {
+    padding-right: 15px;
+}
+
+.card-post--1 .card-post__author {
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
+    margin-left: 1.5625rem;
+    position: absolute;
+    bottom: 0;
+}
+
+.card-post__author-avatar {
+    width: 2.8125rem;
+    height: 2.8125rem;
+    box-shadow: 0 0 0 0.125rem #fff, 0 0.1875rem 0.4375rem rgba(90, 97, 105, 0.5);
+    display: block;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    text-indent: -9999px;
+}
+
+.card-body.profile {
+    padding-top: 2.1875rem;
+}
+
+.bg-card {
+    background-color: #f5f6f8;
+}

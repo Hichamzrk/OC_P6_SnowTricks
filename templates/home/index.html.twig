@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Home{% endblock %}
+
+{% block body %}
+    <!-- Start Home Image -->
+    <div class="w-100 h-100">
+        <div class="home-bg">          
+            <div class="container">
+                <span class="slogan"><p class="slogan-p">Born to snowboard</p></span>
+            </div>
+            <a href="#tricks"><i class="fas fa-chevron-down fa-4x chevron-down"></i></a>                                         
+        </div>           
+    </div>
+    <!-- End Home Image -->
+
+    <!-- Start Tricks -->
+    {% if (app.user) %}
+        <a class="nav-link" href="{{ path('add_trick') }}" style="text-align: center;">ADD TRICK</a>
+    {% endif %}
+    <span class="tricks-anchor" id="tricks"></span>
+    <div class="container p-5">
+        <div class="row">
+            {% for trick in tricks %}
+                <div class="col-lg-4 mb-4 trick">              
+                    <div class="card">
+                        <a href="{{ path('trick', {'id': trick.id}) }}"><img class="card-img-top home" src="/images/{{ trick.image }}" alt="Trick"></a>
+                        <div class="card-body test">
+                            <a class="btn btn-outline-info btn-sm trick-link" href="{{ path('trick', {'id': trick.id}) }}" target="_blank">{{ trick.name }}</a>
+                            {% if (app.user) %}
+                                <a class="float-right change-link ml-3 mr-3 pt-2" href="{{ path('update_trick', {'trick': trick.id}) }}" target="_blank"><i class="fas fa-pen fa-2x"></i></a>
+                                <a class="float-right change-link ml-2 pt-2" href="{{ path('delete_trick', {'id': trick.id}) }}"><i class="fas fa-trash-alt fa-2x text-info"></i></a>
+                            {% endif %}                      
+                        </div>
+                    </div>               
+                </div>     
+            {% endfor %}
+            <div class="container">
+                <div class="row justify-content-center m-3">
+                    <a href="#" id="loadMoreTrick"><i class="fas fa-plus-circle fa-3x"></i></a>
+                    <a href="#" id="loadLessTrick"><i class="fas fa-minus-circle fa-3x"></i></a>              
+                </div>
+            </div>          
+        </div>         
+    </div>
+    <div class="container-fluid cup">
+        <a href="#tricks">
+            <i class="fas fa-chevron-up fa-4x chevron-up"></i>
+        </a>
+    </div>
+    <!-- End Tricks -->
+{% endblock %}

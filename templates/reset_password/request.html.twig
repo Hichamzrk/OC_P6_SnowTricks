@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% block title %}Reset your password{% endblock %}
 
@@ -19,4 +19,48 @@
 
         <button class="btn btn-primary">Send password reset email</button>
     {{ form_end(requestForm) }}
+{% endblock %}#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtricks - Mot de passe oublié{% endblock %} 
+
+{% block body %}
+    <div class="container forgot">
+
+        <!-- Start Logo -->
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <img class="img-fluid mb-5" src="/images/forgot-password.png" alt="Forgot Password Logo">
+            </div>               
+        </div>
+        <!-- Start Logo -->
+
+        <!-- Start Forgot Password Form -->
+        <div class="row justify-content-center">         
+            <div class="col-md-6">
+                <h1 class="mb-5 text-center">Mot de passe oublié</h1>
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('danger') %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}            
+                {{ form_start(requestForm) }}
+                    <div class="form-group">
+                        {{ form_row(requestForm.email) }}
+                    </div>
+                    <div class="form-group mt-5 text-center">
+                        <button type="submit" class="btn btn-success">Demander la réinitialisation du le mot de passe</button>
+                    </div>
+                {{ form_end(requestForm) }}
+            </div>
+        </div>
+        <!-- Start Forgot Password Form -->
+        
+    </div>
 {% endblock %}

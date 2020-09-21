@@ -23,8 +23,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{id}", name="trick")
      */
-    public function index(Tricks $id, UserInterface $user, Request $request)
+    public function index(Tricks $id, Request $request)
     {
+
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
         ->find($id);
@@ -36,7 +37,7 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             //Je lie le commentaire à l'utilisateur connecté 
-            $comment->setUserId($user)
+            $comment->setUserId($this->getUser())
                 //Je lie le commentaire à la figure 
                 ->setTrickId($id);
             
@@ -77,7 +78,9 @@ class TrickController extends AbstractController
     /**
     * @Route("/add_trick", name="add_trick")
     */
-    public function add(Request $request, SluggerInterface $slugger, UserInterface $user){
+    public function add(Request $request, SluggerInterface $slugger){
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $trick = new Tricks();
 
@@ -101,10 +104,7 @@ class TrickController extends AbstractController
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
     
                 $trick->setImage($newFilename);
-                $trick->setCreatedAt(new \DateTime('now'));
-                $trick->setUpdatedAt(new \DateTime('now'));
-                $trick->setUserId($user);
-                
+ 
                 $image->move(
                     $this->getParameter('image_directory'),
                     $newFilename
@@ -135,17 +135,25 @@ class TrickController extends AbstractController
             }
 
             $videos = $form->get('video')->getData();
-
+            
             if ($videos !== null) {
-                $video = new Video;
-                $video->setUrl($videos);
-                $trick->addVideo($video);            
+                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $videos, $match)) {
+                    $video = new Video;
+                    $video = $match[1];
+                    $video->setUrl('https://www.youtube.com/embed/' . $video);
+                    $trick->addVideo($video);
+                }            
             }
-
+           
+            $trick->setCreatedAt(new \DateTime('now'));
+            $trick->setUpdatedAt(new \DateTime('now'));
+            $trick->setUserId($this->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
+        
+            return $this->redirectToRoute('index');
         }
         
         return $this->render('trick/add-trick.html.twig', [
@@ -156,8 +164,10 @@ class TrickController extends AbstractController
     /**
     * @Route("/update_trick/{trick}", name="update_trick")
     */
-    public function update(Request $request, SluggerInterface $slugger, UserInterface $user, Tricks $trick): Response
+    public function update(Request $request, SluggerInterface $slugger, Tricks $trick): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $form = $this->createForm(TrickType::class, $trick);
         $trickId = $trick->getId();
 
@@ -187,7 +197,7 @@ class TrickController extends AbstractController
                 $trick->setImage($newFilename);
                 $trick->setCreatedAt(new \DateTime('now'));
                 $trick->setUpdatedAt(new \DateTime('now'));
-                $trick->setUserId($user);
+                $trick->setUserId($this->getUser());
 
                 $image->move(
                     $this->getParameter('image_directory'),
@@ -195,8 +205,8 @@ class TrickController extends AbstractController
                 );
             }
             else {
-                $imageFile = $trick->getImage();
-                $trick->setImage($imageFile);
+                $image = 'default-trick.jpg';
+                $trick->setImage($image);
             }
 
             // On récupère les images transmises
@@ -239,7 +249,6 @@ class TrickController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
-            
 
         }
 
@@ -257,6 +266,8 @@ class TrickController extends AbstractController
     */
     public function deleteTrick($id){
 
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $em = $this->getDoctrine()->getManager();
         $trick = $em->getRepository(Tricks::class)->find($id);
 
@@ -270,6 +281,8 @@ class TrickController extends AbstractController
     * @Route("/delete_image/{id}", name="delete_image")
     */
     public function deleteImage($id){
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $em = $this->getDoctrine()->getManager();
         $image = $em->getRepository(Image::class)->find($id);
@@ -294,6 +307,7 @@ class TrickController extends AbstractController
     * @Route("/delete_video/{id}", name="delete_video")
     */
     public function deleteVideo($id){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $em = $this->getDoctrine()->getManager();
         $video = $em->getRepository(video::class)->find($id);

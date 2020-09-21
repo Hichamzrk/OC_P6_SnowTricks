@@ -1,21 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Snowtricks - S'inscrire{% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+    <div class="container registration">
 
-    <h1>Register</h1>
+        <!-- Start Logo -->
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <img class="img-fluid mb-5" src="/images/logup-logo.png" alt="Registration Logo">
+            </div>               
+        </div>
+        <!-- End Logo -->
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-{% endblock %}
+        <!-- Registration Form -->
+        <div class="row justify-content-center">         
+            <div class="col-md-6">
+                <h1 class="mb-5 text-center">Inscrivez-vous</h1>
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {{ form_start(registrationForm) }}
+                    <div class="form-group">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(registrationForm.plainPassword) }}
+                    </div>
+                    <input type="submit"> envoyer </input>
+                {{ form_end(registrationForm) }} 
+            </div>
+        </div>
+        <!-- End Registration Form -->
+        
+    </div>
+{% endblock body %}

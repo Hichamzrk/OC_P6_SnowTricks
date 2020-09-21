@@ -1,3 +1,6 @@
 index:
     path: /
     controller: App\Controller\HomeController::index
+reset-password:
+    path: /reset-password
+    controller: App\Controller\ResetPasswordController::index

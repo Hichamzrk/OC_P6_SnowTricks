@@ -30,5 +30,5 @@ Les étapes pour installer votre programme :
 ### Démarrage
 
 - Lancer votre serveur local : $php bin/console server:start -d
-- Compte de test : (par defaut) -Email : Exemple@test.com ; -Mot de passe : 1234
+- Compte de test : (par defaut) -Email : Exemple@test.com ; -Mot de passe : 123456
 - Enjoy 

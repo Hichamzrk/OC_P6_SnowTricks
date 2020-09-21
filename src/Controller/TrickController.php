@@ -137,16 +137,13 @@ class TrickController extends AbstractController
             $videos = $form->get('video')->getData();
             
             if ($videos !== null) {
-                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $videos, $match)) {
-                    $video = new Video;
-                    $video = $match[1];
-                    $video->setUrl('https://www.youtube.com/embed/' . $video);
-                    $trick->addVideo($video);
-                }            
+                $video = new Video;
+                $video->setUrl($videos);
+                $video->setTrickId($trick);
+                $trick->addVideo($video);
             }
            
             $trick->setCreatedAt(new \DateTime('now'));
-            $trick->setUpdatedAt(new \DateTime('now'));
             $trick->setUserId($this->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -195,7 +192,6 @@ class TrickController extends AbstractController
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
 
                 $trick->setImage($newFilename);
-                $trick->setCreatedAt(new \DateTime('now'));
                 $trick->setUpdatedAt(new \DateTime('now'));
                 $trick->setUserId($this->getUser());
 

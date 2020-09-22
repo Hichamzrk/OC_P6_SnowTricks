@@ -23,11 +23,21 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Email(
+     *      message = "Veuillez entrer un email valide !"
+     * )
+     * @Assert\Length(
+     *      max = 254,
+     *      maxMessage = "Votre email ne peut pas contenir plus que {{ limit }} caractères !"
+     * )
+     *
      */
     private $email;
 
     /**
-     *
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -40,6 +50,10 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image(
+     *      maxSize = "500k",
+     *      maxSizeMessage = "Votre avatar ne doit pas dépasser 500 ko",
+     * )
      */
     private $avatar;
 

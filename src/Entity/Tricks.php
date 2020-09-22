@@ -6,9 +6,13 @@ use App\Repository\TricksRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TricksRepository::class)
+ * @ORM\Entity
+ * @UniqueEntity("Name")
  */
 class Tricks
 {
@@ -21,11 +25,27 @@ class Tricks
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 50,
+     *      minMessage = "Votre titre de trick doit contenir au moins {{ limit }} caractères !",
+     *      maxMessage = "Votre titre de trick ne peut pas contenir plus que {{ limit }} caractères !"
+     * )
      */
     private $Name;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      max = 10000,
+     *      maxMessage = "La description du trick ne peut pas contenir plus que {{ limit }} caractères !"
+     * )
      */
     private $description;
 
@@ -50,7 +70,7 @@ class Tricks
     private $userId;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Category::class, cascade={"persist"})
      */
     private $categoryId;
 

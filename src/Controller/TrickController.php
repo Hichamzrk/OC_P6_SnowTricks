@@ -323,11 +323,6 @@ class TrickController extends AbstractController
         $em->remove($video);
         $em->flush();
         
-        // return $this->render('trick/delete-trick.html.twig', [
-        //     'image' => $image,
-        //     'id' => $id
-        // ]);
-        
         $trick = $video->getTrickId();
         $trickId = $trick->getId();
 

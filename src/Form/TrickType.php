@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
@@ -22,11 +23,21 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name')
-            ->add('description')
+            ->add('Name', TextType::class, [
+                'label' => 'Titre',
+                'attr' => [
+                    'placeholder' => 'Titre du trick',
+                ],
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
+                'attr' => [
+                    'placeholder' => 'Description du trick',
+                ],
+            ])
             ->add('image', FileType::class, [
                 'required' => false,
-                'label' => false,
+                'label' => 'Image',
                 'data_class' => null,
                 'constraints' => [
                     new Image([

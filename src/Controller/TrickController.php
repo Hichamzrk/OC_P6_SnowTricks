@@ -17,13 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 
 class TrickController extends AbstractController
 {
     /**
      * @Route("/trick/{id}", name="trick")
      */
-    public function index(Tricks $id, Request $request)
+    public function index(Tricks $id, Request $request, PaginatorInterface $paginator)
     {
 
         $trick = $this->getDoctrine()
@@ -64,12 +65,22 @@ class TrickController extends AbstractController
         ->getRepository(Comment::class)
         ->findBy([
             'trickId' => $id
-        ]);
+        ],
+        [
+            'id' => 'DESC'
+        ]
+    );
+
+        $comments = $paginator->paginate(
+            $comment, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            10 // Nombre de résultats par page
+        );
 
         return $this->render('trick/index.html.twig', [
             'controller_name' => 'TrickController',
             'trick' => $trick,
-            'comments' => $comment,
+            'comments' => $comments,
             'form' => $form->createView(),
             'images' => $images,
             'videos' => $videos,
@@ -149,13 +160,14 @@ class TrickController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
-        
+            $this->addFlash('success', 'Le Trick a bien était ajouté : félicitation');
             return $this->redirectToRoute('index');
         }
         
         return $this->render('trick/add-trick.html.twig', [
             'controller_name' => 'TrickController',
             'form' => $form->createView(),
+            'trick' => $trick
         ]);
     }
     /**

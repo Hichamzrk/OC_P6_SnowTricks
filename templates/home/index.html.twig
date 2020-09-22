@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}SnowTricks - Home{% endblock %}
-
 {% block body %}
     <!-- Start Home Image -->
     <div class="w-100 h-100">
@@ -20,6 +19,11 @@
     {% endif %}
     <span class="tricks-anchor" id="tricks"></span>
     <div class="container p-5">
+         {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="row">
             {% for trick in tricks %}
                 <div class="col-lg-4 mb-4 trick">              

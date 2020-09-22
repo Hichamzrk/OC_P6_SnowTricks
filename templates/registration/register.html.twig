@@ -29,7 +29,10 @@
                     <div class="form-group">
                         {{ form_row(registrationForm.plainPassword) }}
                     </div>
-                    <input type="submit"> envoyer </input>
+                    {{ form_row(registrationForm.avatar) }}
+                    <div class="form-group mt-4 text-center">
+                        <button type="submit" class="btn btn-success">Modifier</button>
+                    </div>
                 {{ form_end(registrationForm) }} 
             </div>
         </div>

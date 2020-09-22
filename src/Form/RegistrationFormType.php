@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
@@ -21,8 +22,11 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            ->add('email', EmailType::class,[
+                'label' => 'Email :'
+            ])
             ->add('plainPassword', PasswordType::class, [
+                'label' => 'Password :',
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
@@ -40,10 +44,10 @@ class RegistrationFormType extends AbstractType
             ])
             
             ->add('avatar', FileType::class, [
-                'label' => false,
+                'label' => 'Avatar :',
                 'data_class' => null,
                 'attr' => [
-                'placeholder' => 'Modifier ou ajouter un'
+                'placeholder' => 'Ajouter un avatar'
                 ],
                 'constraints' => [
                     new Image([

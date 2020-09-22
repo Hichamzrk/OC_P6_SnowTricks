@@ -26,11 +26,12 @@ class TrickController extends AbstractController
      */
     public function index(Tricks $id, Request $request, PaginatorInterface $paginator)
     {
-
+        //On récupére l'objet
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
         ->find($id);
 
+        //On créer le formulaire de commentaire via le form type
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
@@ -48,19 +49,22 @@ class TrickController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
         }
-
+        
+        //On récupere les images via l'id
         $images = $this->getDoctrine()
         ->getRepository(Image::class)
         ->findBy([
             'trickId' => $id
         ]);
 
+        //On récupere les videos via l'id
         $videos = $this->getDoctrine()
         ->getRepository(Video::class)
         ->findBy([
             'trickId' => $id
         ]);
-
+       
+        //On récupere les commentaire via l'id
         $comment = $this->getDoctrine()
         ->getRepository(Comment::class)
         ->findBy([
@@ -147,6 +151,7 @@ class TrickController extends AbstractController
 
             $videos = $form->get('video')->getData();
             
+            //On vérifie si la vidéo éxiste avant de l'ajouter
             if ($videos !== null) {
                 $video = new Video;
                 $video->setUrl($videos);
@@ -257,9 +262,10 @@ class TrickController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
-
+            $this->addFlash('success', 'Le Trick a bien était modifié : félicitation');
         }
 
+        
         return $this->render('trick/update-trick.html.twig', [
             'form' => $form->createView(),
             'trick' => $trick,

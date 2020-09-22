@@ -29,16 +29,19 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response
     {
+        //On créer le formulaire via le form type
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
+        
+        //On récupére la requéte
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // On récupere l'avatar
             $avatar = $form->get('avatar')->getData();
             
             $originalFilename = pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
+            // On réécrie le nom du fichier
             $safeFilename = $slugger->slug($originalFilename);
             $newFilename = $safeFilename.'-'.uniqid().'.'.$avatar->guessExtension();
 
@@ -49,6 +52,7 @@ class RegistrationController extends AbstractController
                 $newFilename
             );
 
+            //On encode le password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -56,11 +60,12 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            //On enregistre en base de donnée
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+            // On génére un email de confirmation
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('snowtricks@hichamzrk.fr', ''))

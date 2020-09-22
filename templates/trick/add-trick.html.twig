@@ -26,9 +26,8 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <input type='text'> <input> 
-                                                {# {{ form_row(form.Name) }}                                               #}
+                                            <div class="name">
+                                                {{ form_row(form.Name) }}                                              
                                             </div>
                                         </div>
                                         <hr>
@@ -36,7 +35,7 @@
                                             <div class="form-row">
                                                 <div class="form-group col-md-12 text-center">
                                                     
-                                                    <p class="collection-head first">Cliquez pour ajouter, supprimer ou modifier une image</p>
+                                                    <p class="collection-head first">Cliquez pour ajouter une image</p>
                                                     {{ form_widget(form.images) }}
                                                     <input type="hidden" id="image-counter" value="0">
                                                     <hr>                                   
@@ -44,7 +43,7 @@
                                             </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-md-12 text-center">                                             
-                                                        <p class="collection-head">Cliquez pour ajouter, supprimer ou modifier une vidéo (<u>Youtube uniquement</u>)</p>
+                                                        <p class="collection-head">Cliquez pour ajouter une vidéo (<u>Youtube uniquement</u>)</p>
                                                             {{ form_widget(form.video) }}
                                                         <input type="hidden" id="video-counter" value="0">
                                                         

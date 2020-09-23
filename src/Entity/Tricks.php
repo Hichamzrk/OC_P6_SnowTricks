@@ -12,7 +12,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=TricksRepository::class)
  * @ORM\Entity
- * @UniqueEntity("Name")
+ * @UniqueEntity("name")( 
+ *      message="Le nom éxiste déjà."
+ * )
  */
 class Tricks
 {
@@ -35,7 +37,7 @@ class Tricks
      *      maxMessage = "Votre titre de trick ne peut pas contenir plus que {{ limit }} caractères !"
      * )
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="text")
@@ -103,12 +105,12 @@ class Tricks
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }

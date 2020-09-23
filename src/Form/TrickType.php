@@ -39,6 +39,7 @@ class TrickType extends AbstractType
                 'required' => false,
                 'label' => 'Image',
                 'data_class' => null,
+                //mettre dans entité
                 'constraints' => [
                     new Image([
                         'maxSize' => '5M',

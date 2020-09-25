@@ -1,14 +1,25 @@
 
+.idea
+/Notes
+/Diagrammes
+
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
+/.env
 /public/bundles/
-/src/preload.php
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-pack ###
 
 ###> symfony/phpunit-bridge ###
 .phpunit

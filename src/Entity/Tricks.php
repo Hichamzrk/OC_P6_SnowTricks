@@ -23,7 +23,7 @@ class Tricks
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -72,7 +72,7 @@ class Tricks
     private $userId;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Category::class, cascade={"persist"})
      */
     private $categoryId;
 

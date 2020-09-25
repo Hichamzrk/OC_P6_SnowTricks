@@ -3,76 +3,34 @@
 namespace App\Controller;
 
 use App\Entity\Tricks;
-use App\Entity\Comment;
-use App\Form\CommentType;
-use App\Repository\ImageRepository;
-use App\Repository\VideoRepository;
-use App\Repository\TricksRepository;
-use App\Repository\CommentRepository;
+use App\Responders\HomeResponder;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class HomeController extends AbstractController
+class HomeController
 {
-    /**
-     * @Route("/home", name="home")
-     */
-    public function index()
-    {
-        $tricks = $this->getDoctrine()
-        ->getRepository(Tricks::class)
-        ->findAll();
+    /** @var EntityManagerInterface */
+    private $entityManager;
+    /** @var responder */
+    private $responder;
 
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            'tricks' => $tricks
-        ]);
+
+    public function __construct(EntityManagerInterface $entityManager, HomeResponder $responder) {
+        
+        $this->entityManager = $entityManager;
+        $this->responder = $responder;
     }
 
     /**
-     * @Route("/trick/{id}", name="trick")
+     * @Route("/", name="home")
      */
-    public function show(Tricks $id, Request $request, PaginatorInterface $paginator, ImageRepository $repo_image, VideoRepository $repo_video, CommentRepository $repo_comment, EntityManagerInterface $entityManager)
+    public function home()
     {
-        //On créer le formulaire de commentaire via le form type
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
+        $tricks = $this->entityManager
+        ->getRepository(Tricks::class)
+        ->findAll();
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            //Je lie le commentaire à l'utilisateur connecté 
-            $comment->setUserId($this->getUser())
-                //Je lie le commentaire à la figure 
-                ->setTrickId($id);
-            
-            $comment->setCreatedAt(new \DateTime('now'));
-            
-            $entityManager->persist($comment);
-            $entityManager->flush();
-        }
-        
-        $images = $repo_image->findBy(['trickId' => $id]);
-        $videos = $repo_video->findBy(['trickId' => $id]);
-        $comment = $repo_comment->findBy(['trickId' => $id]);
-
-        $comments = $paginator->paginate(
-            $comment, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('trick/index.html.twig', [
-            'controller_name' => 'TrickController',
-            'trick' => $id,
-            'comments' => $comments,
-            'form' => $form->createView(),
-            'images' => $images,
-            'videos' => $videos,
-        ]);
+        return $this->responder->response($tricks);
     }
 }

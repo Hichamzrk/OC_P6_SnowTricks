@@ -1,4 +1,7 @@
 # OC_P6_SnowTricks
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d5602a11a5fa471f96c98fc173fa44b9)](https://app.codacy.com/manual/Hichamzrk/OC_P6_SnowTricks?utm_source=github.com&utm_medium=referral&utm_content=Hichamzrk/OC_P6_SnowTricks&utm_campaign=Badge_Grade_Settings)
+
 - Réseau social en PHP/Symfony.
 - Utilisation du modele MVC.
 - Page d'accueil.

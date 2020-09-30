@@ -1,7 +1,6 @@
 # SnowTricks
-![GitHub Logo](/public/images/favicon.png)
 ### Social network of Snowboarding
-
+![GitHub Logo](/public/images/favicon.png)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/0c0e4612508c42edb9cc18a8960bcdd8)](https://www.codacy.com/manual/Hichamzrk/OC_P6_SnowTricks/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Hichamzrk/OC_P6_SnowTricks&amp;utm_campaign=Badge_Grade)
 
 # How to install the project ?

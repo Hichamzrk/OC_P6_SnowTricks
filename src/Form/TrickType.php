@@ -56,7 +56,7 @@ class TrickType extends AbstractType
             ->add('video', TextType::class,[
                 'label' => false,
                 'mapped' => false,
-                'required' => false
+                'required' => false,
             ])
             
             ->add('categoryId', EntityType::class, [

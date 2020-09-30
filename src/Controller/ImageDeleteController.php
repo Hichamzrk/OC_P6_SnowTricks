@@ -35,12 +35,12 @@ class ImageDeleteController extends AbstractController
         $this->entityManager->flush();
 
         $trick = $image->getTrickId();
-        $trickId = $trick->getId();
+        $slug = $trick->getSlug();
        
         $this->addFlash('success', 'Image bien supprimé !');
         
         return $this->redirectToRoute('update_trick', array(
-            'trick' => $trickId
+            'slug' => $slug
         ));
     }
 }

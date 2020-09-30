@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <ul class="list-inline trick-data">       
                             <li class="list-inline-item">
-                                Ajouté le {{ trick.createdat | date('d/m/Y') }} (<small>Mise à jour le : {% if trick.updatedat is defined %}{{ trick.updatedat | date('d/m/Y') }}{% endif %}</small>)
+                                Ajouté le {{ trick.createdat | date('d/m/Y') }} {% if trick.updatedat is not null %}(<small>Mise à jour le : {{ trick.updatedat | date('d/m/Y') }}</small>){% endif %}
                             </li> |                            
                             <li class="list-inline-item">
                                 Catégorie : {{ trick.categoryId.title }}

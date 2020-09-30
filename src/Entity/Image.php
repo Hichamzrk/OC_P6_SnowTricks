@@ -24,6 +24,7 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity=Tricks::class, inversedBy="images")
+     * @ORM\JoinColumn(name="trickId", referencedColumnName="id", onDelete="CASCADE")
      */
     private $trickId;
 

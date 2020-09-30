@@ -42,7 +42,7 @@ class TrickDetailsController extends AbstractController
 
 
     /**
-     * @Route("/trick/{id}", name="trick")
+     * @Route("/trick/{slug}", name="trick")
      */
     public function trickDetails(Tricks $id, Request $request)
     {

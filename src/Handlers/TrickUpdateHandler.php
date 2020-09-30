@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-
 class TrickUpdateHandler
 {
     /** @var EntityManagerInterface */
@@ -60,8 +59,6 @@ class TrickUpdateHandler
                 $newFilename = $this->fileUploader->upload($image);
 
                 $trick->setImage($newFilename);
-                $trick->setUpdatedAt(new \DateTime('now'));
-                $trick->setUserId($this->tokenStorage->getToken()->getUser());
             }
             else {
                 $image = 'default-trick.jpg';
@@ -86,13 +83,19 @@ class TrickUpdateHandler
             $videos = $form->get('video')->getData();
 
             if ($videos !== null) {
-                $video = new Video;
-                $video->setUrl($videos);
-                $video->setTrickId($trick);
+                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $videos, $match)) {
+                    $video = new Video();
+                    $video_id = $match[1];
+                    $video->setUrl('https://www.youtube.com/embed/' . $video_id);
+                    $video->setTrickId($trick);
 
-                $this->entityManager->persist($video);
+                    $this->entityManager->persist($video);
+                }
             }
-
+           
+            $trick->setUpdatedAt(new \DateTime('now'));
+            $trick->setUserId($this->tokenStorage->getToken()->getUser());
+            
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
             

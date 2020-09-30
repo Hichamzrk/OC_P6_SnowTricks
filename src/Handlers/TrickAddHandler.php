@@ -81,11 +81,17 @@ class TrickAddHandler
             
             //On vérifie si la vidéo éxiste avant de l'ajouter
             if ($videos !== null) {
-                $video = new Video;
-                $video->setUrl($videos)->setTrickId($trick);
-                $trick->addVideo($video);
+                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $videos, $match)) {
+                    $video = new Video();
+                    $video_id = $match[1];
+                    $video->setUrl('https://www.youtube.com/embed/' . $video_id);
+                    $video->setTrickId($trick);
+
+                    $this->entityManager->persist($video);
+                }
             }
-           
+
+
             $trick->setCreatedAt(new \DateTime('now'));
             $trick->setUserId($this->tokenStorage->getToken()->getUser());
 

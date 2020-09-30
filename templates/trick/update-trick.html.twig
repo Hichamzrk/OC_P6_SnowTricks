@@ -22,6 +22,12 @@
                                             {{ message }}
                                         </div>
                                     {% endfor %}
+                                    {% for message in app.flashes('error') %}
+                                        <div class="alert alert-error">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                                                        
                                     {% form_theme form _self %}
                                     {{ form_start(form) }}
                                         <div class="form-row">
@@ -42,7 +48,7 @@
                                             <div class="form-row">
                                                 <div class="form-group col-md-12 text-center">
                                                     
-                                                    <p class="collection-head first">Cliquez pour ajouter, supprimer ou modifier une image</p>
+                                                    <p class="collection-head first">Cliquez pour ajouter une ou des images</p>
                                                     {{ form_widget(form.images) }}
                                                     <input type="hidden" id="image-counter" value="0">
                                                     <div class="container p-5">
@@ -88,7 +94,7 @@
                                             {% if videos is empty %}
                                                 <div class="form-row">
                                                     <div class="form-group col-md-12 text-center">                                             
-                                                        <p class="collection-head">Cliquez pour ajouter, supprimer ou modifier une vidéo (<u>Youtube uniquement</u>)</p>
+                                                        <p class="collection-head">Ajouter une video youtube <br>(<u>Youtube uniquement : "https://www.youtube.com/watch?v=S7OxSI"</u>)</p>
                                                         {{ form_widget(form.video) }}
                                                         <input type="hidden" id="video-counter" value="0">
                                                         

@@ -3,84 +3,47 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\RegistrationFormType;
+use App\Handlers\RegistrationHandler;
+use App\Responders\RegistrationResponder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RegistrationController extends AbstractController
 {
-    private $emailVerifier;
+    private $registrationHandler;
+    private $responder;
+    private $emailVerifie;
+    
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(RegistrationHandler $registrationHandler, RegistrationResponder $responder, EmailVerifier $emailVerifier)
     {
+        $this->registrationHandler = $registrationHandler;
+        $this->responder = $responder;
         $this->emailVerifier = $emailVerifier;
     }
 
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response
+    public function register(): Response
     {
         //On créer le formulaire via le form type
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         
-        //On récupére la requéte
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // On récupere l'avatar
-            $avatar = $form->get('avatar')->getData();
-            
-            $originalFilename = pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME);
-            // On réécrie le nom du fichier
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$avatar->guessExtension();
-
-            $user->setAvatar($newFilename);
-            
-            $avatar->move(
-                $this->getParameter('image_directory'),
-                $newFilename
-            );
-
-            //On encode le password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            //On enregistre en base de donnée
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            // On génére un email de confirmation
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('snowtricks@hichamzrk.fr', ''))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+        $submit = $this->registrationHandler->handle($user, $form);
         
-            $this->addFlash('success', 'Votre compte a bien été crée, un email vous a été envoyé pour le confirmer.');
-            return $this->redirectToRoute('app_register');
+        if ($submit === true) {
+            
+            $this->redirectToRoute('app_register');
+        
         }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+        
+        return $this->responder->response($form);
     }
 
     /**
@@ -88,8 +51,8 @@ class RegistrationController extends AbstractController
      */
     public function verifyUserEmail(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
+         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         // On valide l'email
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());

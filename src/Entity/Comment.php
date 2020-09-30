@@ -19,6 +19,7 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity=Tricks::class, inversedBy="comments")
+     * @ORM\JoinColumn(name="trickId", referencedColumnName="id", onDelete="CASCADE")
      */
     private $trickId;
 

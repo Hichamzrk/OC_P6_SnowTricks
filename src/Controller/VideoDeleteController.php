@@ -22,10 +22,11 @@ class VideoDeleteController extends AbstractController
 
     }
 
-/**
+    /**
     * @Route("/delete_video/{id}", name="delete_video")
     */
     public function deleteVideo($id){
+        
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $video = $this->entityManager->getRepository(Video::class)->find($id);
@@ -34,11 +35,11 @@ class VideoDeleteController extends AbstractController
         $this->entityManager->flush();
 
         $trick = $video->getTrickId();
-        $trickId = $trick->getId();
+        $slug = $trick->getSlug();
 
         $this->addFlash('success', 'Video bien supprimé !');
         return $this->redirectToRoute('update_trick', array(
-            'trick' => $trickId
+            'slug' => $slug
         ));
     }
 }

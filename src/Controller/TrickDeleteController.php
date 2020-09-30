@@ -23,9 +23,9 @@ class TrickDeleteController extends AbstractController
 
 
     /**
-    * @Route("/delete_trick/{id}", name="delete_trick")
+    * @Route("/delete_trick/{slug}", name="delete_trick")
     */
-    public function deleteTrick(Tricks $id, EntityManagerInterface $entityManager){
+    public function deleteTrick(Tricks $id){
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

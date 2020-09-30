@@ -8,10 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=TricksRepository::class)
- * @ORM\Entity
  * @UniqueEntity("name")( 
  *      message="Le nom éxiste déjà."
  * )
@@ -62,7 +62,7 @@ class Tricks
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at = null;
 
@@ -90,6 +90,12 @@ class Tricks
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trickId")
      */
     private $comments;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -156,7 +162,7 @@ class Tricks
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(\DateTimeInterface $updated_at = null): self
     {
         $this->updated_at = $updated_at;
 
@@ -278,5 +284,10 @@ class Tricks
         }
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 }

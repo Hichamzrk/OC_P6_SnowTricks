@@ -36,16 +36,18 @@ class TrickUpdateController extends AbstractController
 
 
     /**
-    * @Route("/update_trick/{trick}", name="update_trick")
+    * @Route("/update_trick/{slug}", name="update_trick")
     */
     public function trickUpdate(Tricks $trick, Request $request)
-    {        
+    {   
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         $imageView = $this->entityManager->getRepository(Image::class)->findBy(['trickId' => $trick]);
         $videoView = $this->entityManager->getRepository(Video::class)->findBy(['trickId' => $trick]);
 
         $form = $this->createForm(TrickType::class, $trick);
         
-        if ($submit = $this->handler->handle($trick, $form) === true) {
+        if ($this->handler->handle($trick, $form) === true) {
             return $this->redirectToRoute('home');
         }
         

@@ -36,8 +36,10 @@ class TrickAddController extends AbstractController
     /**
     * @Route("/add_trick", name="add_trick")
     */
-    public function trickAdd(Request $request)
+    public function trickAdd()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $trick = new Tricks();
         $form = $this->createForm(TrickType::class, $trick);
         

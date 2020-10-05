@@ -15,7 +15,7 @@
 ## Code recovery with git
 
 Connect with SSH key to your server.
-Use the command : `git clone https://github.com/MalronWall/OC_Fo-Back_P6.git`
+Use the command : `https://github.com/Hichamzrk/OC_P6_SnowTricks.git`
 
 ## Configuration
 

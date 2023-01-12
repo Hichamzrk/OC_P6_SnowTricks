@@ -10,7 +10,7 @@
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
-        "doctrine/orm": "^2.7",
+        "doctrine/orm": "^2.13.2",
         "knplabs/knp-paginator-bundle": "^5.3",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
@@ -59,7 +59,10 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {
@@ -94,7 +97,7 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "doctrine/common": ">= 3.0",
+        "doctrine/common": ">= 3.4.1",
         "doctrine/persistence": "<1.3"
     },
     "extra": {
